@@ -1,0 +1,47 @@
+button {
+  width: 100px;
+  height: 50px;
+}
+#container {
+  width: 800px;
+  height: 600px;
+  border: 4px double black;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.morph {
+  animation: morph 1s linear 1;
+  animation-fill-mode: forwards;
+  /*transform-origin: 200px 500px;*/
+}
+.morphr {
+  animation: morphr 1s linear 1 reverse;
+  animation-fill-mode: forwards;
+  /*transform-origin: 200px 500px;*/
+}
+
+@keyframes morph {
+  0% {
+    d: path(
+      'M 120 600 A 1 100 0 0 1  120 100 L 200 100 A 1 100 0 0 0  200 600 z    M 400 600 A 1 100 0 0 1    400 300  L   480 300 A 1 100 0 0 0    480 600 z M  760 400 A 1 100 0 0 1 760 600 L  680 600 A 1 100 0 0 0  680 400 z'
+    );
+  }
+  100% {
+    d: path(
+      'M 473 420 A 180 180 0 0 1 473 59 L 473 104 A 135 135 0 0 0 473 375 Z M 630 149 A 180 180 0 0 1 473 420 L 473 375 A 135 135 0 0 0 590 172 Z M 473 59 A 180 180 0 0 1 630 149 L 590 172 A 135 135 0 0 0 473 104 Z'
+    );
+  }
+}
+@keyframes morphr {
+  0% {
+    d: path(
+      'M 120 600 A 1 100 0 0 1  120 100 L 200 100 A 1 100 0 0 0  200 600 z M   A 400 600 1 100 0 0 1  480 300 L 400 300 A 1 100 0 0 0  480 600  z M  760 400 A 1 100 0 0 1 760 600 L  680 600 A 1 100 0 0 0  680 400 z'
+    );
+  }
+  100% {
+    d: path(
+      'M 473 420 A 180 180 0 0 1 473 59 L 473 104 A 135 135 0 0 0 473 375 Z M 630 149 A 180 180 0 0 1 473 420 L 473 375 A 135 135 0 0 0 590 172 Z M 473 59 A 180 180 0 0 1 630 149 L 590 172 A 135 135 0 0 0 473 104 Z'
+    );
+  }
+}

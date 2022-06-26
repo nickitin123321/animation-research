@@ -1,0 +1,13 @@
+.anirect {
+  animation: recte 1s linear 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes recte {
+  0% {
+    transform: translateY(850px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

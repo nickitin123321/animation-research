@@ -1,0 +1,22 @@
+.anirect:hover {
+  animation: recte 1.5s linear 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes recte {
+  50% {
+    transform: translateY(-30px);
+  }
+  100% {
+    /* fill: orange; */
+    transform: translateY(0px);
+    fill-opacity: 1;
+    width: 150px;
+  }
+}
+
+.anirect:active {
+  fill-opacity: 1;
+  fill: red;
+  width: 150px;
+}

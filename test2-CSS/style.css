@@ -1,0 +1,29 @@
+.svg{
+  animation: svg 3s linear infinite;
+}
+.anirect{
+  animation: recte 3s linear infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes svg {
+  50% {
+    transform: translateY(400px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes recte {
+  50% {
+    fill: green;
+    transform: rotate(360deg);
+  }
+  100% {
+    fill: red;
+    transform: rotate(0deg);
+  }
+}
+svg {
+  display: block;
+  margin: auto;
+}

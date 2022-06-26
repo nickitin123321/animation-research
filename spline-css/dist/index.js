@@ -1,0 +1,235 @@
+"use strict";
+const config = {
+    tag: 'svg',
+    name: 'Svg',
+    attrs: {
+        xmlns: 'http://www.w3.org/2000/svg',
+        border: 0,
+        width: '1000px',
+        height: '400px',
+        class: 'anychart-ui-support',
+        style: 'display: block',
+    },
+    content: [
+        {
+            tag: 'g',
+            name: 'Root',
+            attrs: {
+                id: 'root',
+                transform: 'scale(2) translate(40 -200)',
+            },
+            content: [
+                {
+                    tag: 'g',
+                    name: 'shapes-layers',
+                    attrs: {
+                        id: 'shapes',
+                    },
+                },
+                {
+                    tag: 'g',
+                    name: 'axes-layer',
+                    attrs: {
+                        id: 'axes',
+                    },
+                },
+                {
+                    tag: 'g',
+                    name: 'overflow-layer',
+                    attrs: {
+                        id: 'overflow',
+                    },
+                },
+                {
+                    tag: 'g',
+                    name: 'labels-layer',
+                    attrs: {
+                        id: 'labels',
+                    },
+                },
+            ],
+        },
+    ],
+};
+const stage = acg.create(config);
+stage.container = document.getElementById('container');
+stage.render();
+class SplineDrawer {
+    constructor(graph) {
+        this.graph = graph;
+        this.points = [];
+        this.makePoints();
+        this.xArray = [];
+        this.yArray = [];
+        this.points.forEach((element) => {
+            this.xArray.push(element.x);
+        });
+        this.points.forEach((element) => {
+            this.yArray.push(element.y);
+        });
+        this.xMax = Math.max(...this.xArray);
+        this.xMin = Math.min(...this.xArray);
+        this.yMax = Math.max(...this.yArray);
+        this.yMin = Math.min(...this.yArray);
+    }
+    makePoints() {
+        for (let i = 0; i < this.graph.length; i++) {
+            this.points.push({ x: i * 50 + 20, y: this.graph[i] * 40 * -1 + 400 });
+        }
+        return this.points;
+    }
+    makeContolPoints(points) {
+        const result = [];
+        for (let i = 0; i < points.length - 1; i++) {
+            result.push({
+                x: (points[i].x + points[i + 1].x) / 2,
+                y: points[i].y,
+            });
+            result.push({
+                x: (points[i].x + points[i + 1].x) / 2,
+                y: points[i + 1].y,
+            });
+            result.push({
+                x: points[i + 1].x,
+                y: points[i + 1].y,
+            });
+        }
+        return result;
+    }
+    makePath(points) {
+        const M = `M${points[0].x}, ${points[0].y}`;
+        const controlPoints = this.makeContolPoints(points);
+        let curve = ``;
+        for (let i = 0; i < controlPoints.length; i += 3) {
+            curve += `C ${controlPoints[i].x} ${controlPoints[i].y} ${controlPoints[i + 1].x} ${controlPoints[i + 1].y} ${controlPoints[i + 2].x}  ${controlPoints[i + 2].y} `;
+        }
+        const path = M + curve;
+        return path;
+    }
+    drawXAxis() {
+        const path = {
+            tag: 'path',
+            name: `xAxis${Math.random()}`,
+            attrs: {
+                d: `M${this.xMax} ${this.yMax} L ${this.xMin} ${this.yMax}`,
+                stroke: 'black',
+                fill: 'none',
+                id: `xAxis`,
+            },
+        };
+        return path;
+    }
+    drawXLabels() {
+        const labels = [];
+        this.xArray.forEach((element, i) => {
+            const label = {
+                tag: 'text',
+                name: `text${Math.random()}`,
+                attrs: {
+                    x: `${element}`,
+                    y: `${this.yMax + 20}`,
+                },
+                content: `${i + 1}`,
+            };
+            labels.push(label);
+        });
+        return labels;
+    }
+    calculateYValues() {
+        const yValues = [];
+        const len = Math.max(...this.graph) - Math.min(...this.graph);
+        const part = 2;
+        const stepY = len / part;
+        for (let i = 0; i <= part; i++) {
+            yValues[i] = Math.round(Math.max(...this.graph) - stepY * i);
+        }
+        return yValues;
+    }
+    drawYLabels(id) {
+        const labels = [];
+        const yValues = this.calculateYValues();
+        const len = this.yMax - this.yMin;
+        const step = len / 2;
+        console.log(step);
+        yValues.forEach((element, i) => {
+            const label = {
+                tag: 'text',
+                name: `text${Math.random()}`,
+                attrs: {
+                    x: `${this.xMin - 20}`,
+                    y: `${this.yMin + step * i}`,
+                    class: `${id}`,
+                },
+                content: `${element}`,
+            };
+            labels.push(label);
+        });
+        return labels;
+    }
+    drawYAxis() {
+        const path = {
+            tag: 'path',
+            name: `xAxis${Math.random()}`,
+            attrs: {
+                d: `M${this.xMin} ${this.yMax} L ${this.xMin} ${this.yMin}`,
+                stroke: 'black',
+                fill: 'none',
+                id: `yAxis`,
+            },
+        };
+        return path;
+    }
+    draw(name, color, dashoffset, dasharray) {
+        const path = {
+            tag: 'path',
+            name: `${name}`,
+            attrs: {
+                id: `${name}`,
+                d: `${this.makePath(this.points)}`,
+                stroke: `${color}`,
+                fill: 'none',
+                'stroke-dashoffset': `${dashoffset}`,
+                'stroke-dasharray': `${dasharray}`,
+            },
+        };
+        return path;
+    }
+}
+function addSeries(series) {
+    const spline = new SplineDrawer(series).draw('path1', 'black', 0, 0);
+    const xAxis = new SplineDrawer(series).drawXAxis();
+    const yAxis = new SplineDrawer(series).drawYAxis();
+    const xLabels = new SplineDrawer(series).drawXLabels();
+    const yLabels = new SplineDrawer(series).drawYLabels(1);
+    const shapes = stage.find('shapes-layers');
+    const overflow = stage.find('overflow-layer');
+    const axes = stage.find('axes-layer');
+    shapes.content = [...shapes.content, spline, ...xLabels];
+    overflow.content = [...yLabels];
+    axes.content = [xAxis, yAxis];
+}
+function addNewSeries(series) {
+    const shapes = stage.find('shapes-layers');
+    const spline2 = new SplineDrawer(series).draw('path2', 'green', 10000, 10000);
+    const xLabels = new SplineDrawer(series).drawXLabels();
+    const yLabels = new SplineDrawer(series).drawYLabels(2);
+    shapes.content = [...shapes.content, ...xLabels, ...yLabels, spline2];
+    stage.render();
+}
+const but = document.querySelector('button');
+const data = [1, 3, 4, 1, 3, 4, 2, 3, 2];
+addSeries(data);
+const text = document.getElementById('root');
+text === null || text === void 0 ? void 0 : text.classList.add('text');
+but === null || but === void 0 ? void 0 : but.addEventListener('click', () => {
+    const data2 = [3, 5, 2, 4, 2, 5, 1, 3, 2, 6, 1, 3, 2, 3];
+    addNewSeries(data2);
+    const overflow = document.getElementById('overflow');
+    const path2 = document.getElementById('path2');
+    path2 === null || path2 === void 0 ? void 0 : path2.classList.add('lineAnimate');
+    overflow === null || overflow === void 0 ? void 0 : overflow.classList.add('overflow');
+    const path1 = document.getElementById('shapes');
+    path1 === null || path1 === void 0 ? void 0 : path1.classList.add('scale');
+});
+stage.render();
+//# sourceMappingURL=index.js.map

@@ -1,0 +1,84 @@
+#container {
+  width: 800px;
+  height: 600px;
+  border: 4px double black;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* svg {
+  display: block;
+} */
+
+.button {
+  width: 100px;
+  height: 50px;
+}
+
+.anirect {
+  animation: recte 200ms linear 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes recte {
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.anirectr {
+  animation: recter 200ms linear 1 reverse;
+  animation-fill-mode: forwards;
+}
+
+@keyframes recter {
+  to {
+    transform: scale(1.1);
+  }
+}
+
+.morph0 {
+  animation: morph 200ms linear 1, opacity 1s linear 1;
+  animation-fill-mode: forwards;
+}
+
+.morph1 {
+  animation: morph 200ms linear 1, rotate1 1s linear 1, opacity 1s linear 1;
+  animation-fill-mode: forwards;
+}
+.morph2 {
+  animation: morph 200ms linear 1, rotate2 1s linear 1, opacity 1s linear 1;
+  animation-fill-mode: forwards;
+}
+.morph3 {
+  animation: morph 200ms linear 1, rotate3 1s linear 1, opacity 1s linear 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes morph {
+  0% {
+    d: path(
+      'M 446.5 227.5 L 446.5 57.849999999999994 A 169.65 169.65 0 0 1 566.4606654282978 107.53933457170221 Z'
+    );
+  }
+
+  100% {
+    d: path('M 446.5 227.5 L 446.5 57.849999999999994 A 169.65 169.65 0 0 1 616.15 227.5 Z ');
+  }
+}
+
+@keyframes rotate1 {
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes rotate2 {
+  to {
+    transform: rotate(180deg);
+  }
+}
+@keyframes rotate3 {
+  to {
+    transform: rotate(270deg);
+  }
+}

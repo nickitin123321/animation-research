@@ -1,0 +1,10 @@
+.anirect {
+  animation: recte 1s linear 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes recte {
+  to {
+    transform: scaleX(0.9);
+  }
+}

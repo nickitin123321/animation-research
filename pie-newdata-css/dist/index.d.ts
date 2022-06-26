@@ -1,0 +1,14 @@
+declare const config: any;
+declare const stage: any;
+declare const pather: any;
+declare function getRandomData(): number[];
+declare const angles: Array<number>;
+declare const container: Element;
+declare const width: number;
+declare const height: number;
+declare function renderStage(stage: any, data: Array<number>): string[];
+declare function spread(): void;
+declare const data: number[];
+declare const pathDs: string[];
+declare function newData(): void;
+declare const but: HTMLElement | null;

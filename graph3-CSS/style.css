@@ -1,0 +1,47 @@
+#container {
+  width: 1400px;
+  height: 800px;
+  border: 4px double black;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.anirect {
+  animation: recte 500ms linear 1;
+  animation-fill-mode: forwards;
+}
+
+.anirectr {
+  animation: recter 500ms linear 1 reverse;
+  animation-fill-mode: forwards;
+}
+
+@keyframes recte {
+  50% {
+    /* transform: translateY(-30px); */
+  }
+  100% {
+    /* fill: orange; */
+    transform: scaleX(1.4);
+    fill-opacity: 1;
+    /* width: 150px; */
+  }
+}
+
+@keyframes recter {
+  50% {
+    /* transform: translateY(-30px); */
+  }
+  100% {
+    /* fill: orange; */
+    /* transform: translateY(0px); */
+    transform: scaleX(1.4);
+    fill-opacity: 1;
+    /* width: 150px; */
+  }
+}
+.freeze {
+  fill-opacity: 1;
+  fill: red;
+  transform: scaleX(1.4);
+}

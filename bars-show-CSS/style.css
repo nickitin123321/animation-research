@@ -1,0 +1,33 @@
+#container {
+  width: 1200px;
+  height: 800px;
+  border: 4px double black;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+p {
+  font-family: Verdana;
+  font-size: 20;
+  text-align: left;
+  margin: 5px;
+}
+#text {
+  border: 1px solid black;
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.anirect {
+  animation: recte 1s linear 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes recte {
+  0% {
+    transform: translateY(700px);
+  }
+  100% {
+    transform: translateY(100px);
+  }
+}
